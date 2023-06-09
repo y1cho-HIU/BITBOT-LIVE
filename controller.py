@@ -36,7 +36,6 @@ class LiveController:
         ]
 
     def main(self):
-
         while not self.stop:
             try:
                 key = input(self.BASIC_STATEMENT)
@@ -61,7 +60,7 @@ class LiveController:
     def start_command(self):
         """ start """
         if self.operator.start() is not True:
-
+            """ ??? """
 
     def stop_command(self, signum = None, frame=None):
         """ stop """
@@ -76,7 +75,6 @@ class LiveController:
     def info_command(self):
         """ information display """
         self._get_trading_record()
-
 
     def _get_trading_record(self):
         """ get trading record """

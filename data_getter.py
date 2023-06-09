@@ -1,5 +1,7 @@
 import requests
 
+import params_private
+
 
 class DataGetter:
     """
@@ -9,9 +11,10 @@ class DataGetter:
     ISO_DATEFORMAT = "%Y-%m-%dT%H:%M:%S"
     COIN_NAME = "XRPUSDT"
     INTERVAL = "5m"
+    LIMIT = params_private.sma_period
 
     def __init__(self):
-        self.url = f'https://api.binance.com/api/v3/klines?symbol={self.COIN_NAME}&interval={self.INTERVAL}&limit=1'
+        self.url = f'https://api.binance.com/api/v3/klines?symbol={self.COIN_NAME}&interval={self.INTERVAL}&limit={self.LIMIT}'
 
     def get_info(self):
         """
@@ -20,12 +23,19 @@ class DataGetter:
         data = self.__get_data_from_server()
         return self.__create_candle_info(data[-1])
 
+    def get_init_info(self):
+        data = self.__get_data_from_server()
+        return [self.__create_candle_info(data[i]) for i in range(0, self.LIMIT)]
+
     @staticmethod
     def __create_candle_info(data):
         """
-
-        :param data:
-        :return:
+        :return:{
+            "datetime",
+            "open",
+            "close",
+            "volume",
+        }
         """
         try:
             return {
@@ -59,4 +69,5 @@ class DataGetter:
 
 
 dg = DataGetter()
-print(dg.get_info())
+# print(dg.get_init_info())
+# print(dg.get_info())
